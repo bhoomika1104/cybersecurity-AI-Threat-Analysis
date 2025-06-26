@@ -418,6 +418,12 @@ class CybersecurityThreatDetector:
             import pathlib
             base_path = pathlib.Path(__file__).parent.resolve()
             model_dir = base_path / directory
+            print(f"Loading models from directory: {model_dir}")
+            for model_file in ["network_autoencoder.pkl", "network_isoforest.pkl", "network_scaler.pkl",
+                               "network_feature_columns.pkl", "malware_detector.pkl", "phishing_vectorizer.pkl",
+                               "phishing_detector.pkl"]:
+                model_path = model_dir / model_file
+                print(f"Checking model file: {model_path} - Exists: {model_path.exists()}")
             self.network_autoencoder = torch.load(str(model_dir / "network_autoencoder.pkl"))
             self.network_isoforest = joblib.load(str(model_dir / "network_isoforest.pkl"))
             self.network_scaler = joblib.load(str(model_dir / "network_scaler.pkl"))
