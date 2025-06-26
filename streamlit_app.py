@@ -24,6 +24,30 @@ detector = load_detector()
 
 st.title("AI-Powered Cybersecurity Threat Detection System")
 
+# Debug: Show if models loaded successfully
+if detector.is_trained:
+    st.sidebar.success("Models loaded successfully.")
+else:
+    st.sidebar.error("Models failed to load.")
+
+# Debug: Run minimal test detection on startup
+try:
+    import pandas as pd
+    sample_data = pd.DataFrame({
+        'bytes_sent': [5000, 10000],
+        'bytes_received': [8000, 15000],
+        'duration': [60, 120],
+        'port': [80, 443],
+        'protocol_type': ['tcp', 'tcp'],
+        'service': ['http', 'https'],
+        'flag': ['SF', 'SF'],
+        'src_ip': ['192.168.1.1', '10.0.0.1']
+    })
+    test_results = detector.detect_network_threats(sample_data)
+    st.sidebar.write(f"Test detection results: {test_results}")
+except Exception as e:
+    st.sidebar.error(f"Error during test detection: {e}")
+
 menu = ["Home", "Network Threat Detection", "Malware Detection", "Phishing Detection", "Dashboard"]
 choice = st.sidebar.selectbox("Select Functionality", menu)
 
